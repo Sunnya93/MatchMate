@@ -1,0 +1,18 @@
+﻿
+<MudCard>
+    <MudCardContent>
+
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text">변경하기</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+
+    [Parameter]
+    public List<Person> MatchedList { get; set; }
+
+    [Parameter]
+    public string Place { get; set; }
+}

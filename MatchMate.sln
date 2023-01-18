@@ -4,9 +4,9 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate", "MatchMate\MatchMate.csproj", "{3567EF7D-A0EE-4BA8-A8F6-E7ECDA20930E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchMate.Class", "MatchMate.Class\MatchMate.Class.csproj", "{75BF007A-E66E-4E1F-BD32-9330D2D96813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Class", "MatchMate.Class\MatchMate.Class.csproj", "{75BF007A-E66E-4E1F-BD32-9330D2D96813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchMate.Server", "MatchMate.Server\MatchMate.Server.csproj", "{EA9889E5-1153-435B-84F8-4838505C3EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Server", "MatchMate.Server\MatchMate.Server.csproj", "{EA9889E5-1153-435B-84F8-4838505C3EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,7 +33,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {0CBC74A4-4AD6-48B6-BC53-3CF23FC84626}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal
