@@ -11,7 +11,15 @@
         </div>
 
         <article class="content px-4 h-100 justify-content-center">
-            @Body
+            <CascadingValue Value="Matches">
+                @Body
+            </CascadingValue>
         </article>
     </main>
 </div>
+
+@code{
+
+    [Parameter]
+    public List<Matched> Matches { get; set; }
+}

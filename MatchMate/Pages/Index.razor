@@ -1,18 +1,24 @@
 ﻿@page "/"
 
-<MudCarousel TData="object" Class="mud-width-full" Style="height:600px;">
-    <MudCarouselItem>
-        <MatchedCard Place="@MatchedMcdonald.Place" MatchedTeam="@MatchedMcdonald.MatchedPerson" />
-    </MudCarouselItem>
-    <MudCarouselItem>
-        <MatchedCard Place="@MatchedOliveYoung.Place" MatchedTeam="@MatchedOliveYoung.MatchedPerson"/>
-    </MudCarouselItem>
-    <MudCarouselItem>
-        <MatchedCard Place="@MatchedSamsung.Place" MatchedTeam="@MatchedSamsung.MatchedPerson"/>
-    </MudCarouselItem>
-</MudCarousel>
+    <MudCarousel TData="object" Class="mud-width-full" Style="height:600px;">
+
+        <MudCarouselItem>
+            <MatchedCard Place="@MatchedMcdonald.Place" MatchedTeam="@MatchedMcdonald.MatchedPerson" />
+        </MudCarouselItem>
+        <MudCarouselItem>
+            <MatchedCard Place="@MatchedOliveYoung.Place" MatchedTeam="@MatchedOliveYoung.MatchedPerson"/>
+        </MudCarouselItem>
+        <MudCarouselItem>
+            <MatchedCard Place="@MatchedSamsung.Place" MatchedTeam="@MatchedSamsung.MatchedPerson"/>
+        </MudCarouselItem>
+    </MudCarousel>
 
 @code {
+
+
+    [CascadingParameter]
+    public List<Matched> Matches { get; set; }
+
     private Matched MatchedMcdonald;
     private Matched MatchedOliveYoung;
     private Matched MatchedSamsung;
@@ -96,5 +102,6 @@
                 }
             }
             };
+
     }
 }
