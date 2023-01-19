@@ -1,17 +1,20 @@
 ﻿
-<MudCard>
-    <MudCardContent>
-
-    </MudCardContent>
-    <MudCardActions>
-        <MudButton Variant="Variant.Text">변경하기</MudButton>
-    </MudCardActions>
-</MudCard>
+<MudPaper Class="gap-5">
+    <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">@Place</MudText>
+    <MudPaper>
+        <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap">
+            @foreach(List<People> MatchedPeople in MatchedTeam)
+            {
+                <MatchedTeam Matched="MatchedPeople"/>
+            }
+        </div>
+    </MudPaper>
+</MudPaper>
 
 @code {
-
+    
     [Parameter]
-    public List<Person> MatchedList { get; set; }
+    public List<List<People>> MatchedTeam { get; set; }
 
     [Parameter]
     public string Place { get; set; }

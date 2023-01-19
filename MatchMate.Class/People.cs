@@ -1,9 +1,9 @@
 ﻿namespace MatchMate.Class
 {
-    public class Person
+    public class People
     {
-        public string Name { get; set; }
-        public string Sex { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? Name { get; set; }
+        public string? Gender { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

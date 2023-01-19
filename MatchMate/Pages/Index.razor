@@ -1,7 +1,100 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<MudCarousel TData="object" Class="mud-width-full" Style="height:600px;">
+    <MudCarouselItem>
+        <MatchedCard Place="@MatchedMcdonald.Place" MatchedTeam="@MatchedMcdonald.MatchedPerson" />
+    </MudCarouselItem>
+    <MudCarouselItem>
+        <MatchedCard Place="@MatchedOliveYoung.Place" MatchedTeam="@MatchedOliveYoung.MatchedPerson"/>
+    </MudCarouselItem>
+    <MudCarouselItem>
+        <MatchedCard Place="@MatchedSamsung.Place" MatchedTeam="@MatchedSamsung.MatchedPerson"/>
+    </MudCarouselItem>
+</MudCarousel>
 
-Welcome to your new app.
+@code {
+    private Matched MatchedMcdonald;
+    private Matched MatchedOliveYoung;
+    private Matched MatchedSamsung;
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    protected override void OnInitialized()
+    {
+        MatchedMcdonald = new Matched()
+        {  
+            Place = "맥도날드", 
+            MatchedPerson = new List<List<People>>()
+            {
+                new List<People>()
+                {
+                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
+                }
+            }
+        };
+
+        MatchedOliveYoung = new Matched()
+            {
+                Place = "올리브영",
+                MatchedPerson = new List<List<People>>()
+            {
+                new List<People>()
+                {
+                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
+                }
+            }
+            };
+
+        MatchedSamsung = new Matched()
+            {
+                Place = "삼성",
+                MatchedPerson = new List<List<People>>()
+            {
+                new List<People>()
+                {
+                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
+                },
+                new List<People>()
+                {
+                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
+                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
+                }
+            }
+            };
+    }
+}

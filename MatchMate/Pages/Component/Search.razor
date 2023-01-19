@@ -1,0 +1,48 @@
+﻿<div class="d-flex flex-column">
+    <MudTextField @bind-Value="@searchValue" Label="@Title" 
+                  Variant="Variant.Outlined" Adornment="Adornment.End" 
+                  AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" 
+                  TextChanged="@((e) => OnInput(e))" />
+
+    <MudList>
+        @{
+            foreach (var person in Finds)
+            {
+                <MudListItem Text="@person.Name" Icon="@Icons.Material.Filled.Person" OnClick="@(() => ClickedList(person.Name))"/>
+            }
+        }
+    </MudList>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string searchValue { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public EventCallback<string> searchValueChanged { get; set; }
+
+    [Parameter]
+    public List<People> Peoples { get; set; }
+
+    private List<People> Finds = new List<People>();
+
+    private async Task ClickedList(string Name)
+    {
+        searchValue = Name;
+        await searchValueChanged.InvokeAsync(searchValue);
+    }
+
+    private async Task OnInput(string Value)
+    {
+        await ClickedList(Value);
+
+        if (string.IsNullOrEmpty(searchValue)) return;
+        Finds = Peoples.Where(i => i.Name.ToLower().Contains(searchValue.ToLower())).ToList();
+    }
+
+}

@@ -1,0 +1,28 @@
+﻿@inject IDialogService DialogService
+
+<MudButton Variant="Variant.Filled" Color="@buttonColor" Style="color: white; height: 60px;" Class="w-100" @onclick="OpenDialog">
+    @Text
+</MudButton>
+
+@code {
+    [Parameter]
+    public List<People> Matched { get; set; }
+
+    private string Text { get; set; }
+
+    public Color buttonColor { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Text = string.Join(", ", Matched.Select(p => p.Name));
+        buttonColor = Color.Primary;
+    }
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters { ["Matched"] = Matched };
+        DialogService.Show<MatchedDialog>("팀 수정하기", parameters, options);
+    }
+
+}

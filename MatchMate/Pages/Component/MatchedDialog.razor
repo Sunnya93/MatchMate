@@ -1,0 +1,58 @@
+﻿@inject ISnackbar Snackbar
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3 mb-n1"/>
+            멤버 편집하기
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudContainer Style="max-height: 300px; overflow-y: scroll">
+            <div class="d-flex pb-3">
+                <Search Peoples="Peoples" Title="추가할 사람" @bind-searchValue="@Name" />
+                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="Add"></MudIconButton>
+            </div>
+            <MudChipSet AllClosable="true" OnClose="Closed">
+                @foreach (People value in Matched)
+                {
+                    <MudChip Text="@value.Name"></MudChip>
+                }
+            </MudChipSet>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">닫기</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public List<People> Matched { get; set; }
+
+    private List<People> Peoples;
+    private string Name { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string json;
+        using (FileStream fs = File.OpenRead(@"D:\Github\MatchMate\MatchMate\wwwroot\data\Peoples.json"))
+
+        using (StreamReader reader = new StreamReader(fs))
+        {
+            json = await reader.ReadToEndAsync();
+        }
+
+        Peoples = JsonSerializer.Deserialize<List<People>>(json);
+    }
+
+    public void Add()
+    {
+        People people = Peoples.Where(i => i.Name == Name).FirstOrDefault();
+        if (people is null) return;
+        Matched.Add(people);
+    }
+
+    public void Closed(MudChip chip) => Matched.RemoveAll(i => i.Name == chip.Text);
+    private void Cancel() => MudDialog.Cancel();
+}
