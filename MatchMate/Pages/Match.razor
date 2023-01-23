@@ -1,7 +1,40 @@
 ﻿@page "/match"
+@inject MatchService _Service
 
-<h1>Hello, world!</h1>
+<div>
+    <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">구역 팀 배정</MudText>
+        @foreach (Place place in places)
+        {
+            <MudPaper Class="ma-4 d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3" Elevation="3">
+                    <PlaceButton MyPlace="place"/>
+            </MudPaper>
+        }
 
-Welcome to your new app.
+    <div class="m-3">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true" OnClick="Add">새로운 구역 추가하기</MudButton>
+        <MudButton Class="mt-3" Variant="Variant.Filled" Color="Color.Success" FullWidth="true" href="matchpeople" OnClick="Save">봉사자 체크하기</MudButton>
+    </div>
+        
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private List<Place> places = new List<Place>()
+    {
+        new Place{ Name = "맥도날드", Color = "#f6b910", MaxTeam = 0 },
+        new Place{ Name = "올리브영", Color = "#0bf249", MaxTeam = 0 },
+        new Place{ Name = "가락115동", Color = "#1cdbef", MaxTeam = 0 },
+        new Place{ Name = "삼성빌딩", Color = "#0497f8", MaxTeam = 0 },
+        new Place{ Name = "프라임병원", Color = "#f70505", MaxTeam = 0}
+    };
+
+    private void Add()
+    {
+        places.Add(new Place());
+    }
+
+    private void Save()
+    {
+        _Service.Places = places;
+    }
+}
+

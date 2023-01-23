@@ -23,7 +23,7 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
         builder.Services.AddMudServices();
-        builder.Services.AddSingleton<WeatherForecastService>();
+		builder.Services.AddSingleton<MatchService>();
 
 		return builder.Build();
 	}

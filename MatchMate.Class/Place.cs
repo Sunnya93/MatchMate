@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MatchMate.Class
 {
-    public class Matched
+    public class Place
     {
-        public Place? Place { get; set; }
+        public string? Name { get; set; }
+        public int MaxTeam { get; set; }
+        public string? Color { get; set; }
 
-        public List<List<People>>? MatchedPerson { get; set; }
     }
 }

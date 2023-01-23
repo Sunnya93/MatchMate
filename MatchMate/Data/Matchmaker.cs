@@ -7,6 +7,10 @@ namespace MatchMate.Data
         private readonly List<People> _people;
         private readonly Random _random = new Random();
 
+        public Matchmaker()
+        {
+        }
+
         public Matchmaker(List<People> people)
         {
             _people = people;
@@ -40,33 +44,58 @@ namespace MatchMate.Data
             return matches;
         }
 
-        public List<List<People>> MakeMatches(int maxMatchedPeople)
+        public List<Matched> MakeMatches(List<People> selectedPeople, List<Place> places, int maxMatchedPeople)
         {
-            var sameSexPeople = _people.FindAll(person => person.Gender == "male" || person.Gender == "female");
-            if (sameSexPeople.Count < maxMatchedPeople) return null;
-            var matches = new List<List<People>>();
-            var matchedPeople = new List<People>();
+            List<Matched> matcheds = new List<Matched>();
+            var malePeople = selectedPeople.FindAll(person => person.Gender == "Male");
+            var femalePeople = selectedPeople.FindAll(person => person.Gender == "Female");
+
+            // Create a new Random object outside of the loops to improve performance
             var random = new Random();
-            int i = 0;
-            while (sameSexPeople.Count > 0)
+
+            // Loop through the places
+            foreach (Place place in places)
             {
-                var group = new List<People>();
-                int j = 0;
-                while (j < maxMatchedPeople && sameSexPeople.Count > 0)
+                if (malePeople.Count == 0) return matcheds;
+
+                var matches = new List<List<People>>();
+                var matchedPeople = new List<People>();
+
+                int i = 0;
+                while (malePeople.Count >= 0 && matches.Count < place.MaxTeam)
                 {
-                    int index = random.Next(sameSexPeople.Count);
-                    if (!matchedPeople.Contains(sameSexPeople[index]))
+                    var group = new List<People>();
+                    int j = 0;
+                    while (j < maxMatchedPeople && malePeople.Count > 0)
                     {
-                        matchedPeople.Add(sameSexPeople[index]);
-                        group.Add(sameSexPeople[index]);
-                        sameSexPeople.RemoveAt(index);
-                        j++;
+                        int index = random.Next(malePeople.Count);
+                        if (!matchedPeople.Contains(malePeople[index]))
+                        {
+                            matchedPeople.Add(malePeople[index]);
+                            group.Add(malePeople[index]);
+                            malePeople.RemoveAt(index);
+                            j++;
+                        }
+                    }
+
+                    matches.Add(group);
+                    i += maxMatchedPeople;
+
+                    if (malePeople.Count == 0)
+                    {
+                        malePeople = femalePeople;
+                        continue;
                     }
                 }
-                matches.Add(group);
-                i += maxMatchedPeople;
+
+                matcheds.Add(new Matched
+                {
+                    Place = place,
+                    MatchedPerson = matches
+                });
             }
-            return matches;
+
+            return matcheds;
         }
     }
 }

@@ -1,0 +1,40 @@
+﻿@page "/matchpeople"
+@inject MatchService _Service
+@inject NavigationManager _navManager
+
+<div>
+    <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">봉사자 선택</MudText>
+    <MudPaper>
+        <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3">
+            <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
+                @foreach (People people in peoples)
+                {
+                    <MudChip Text="@people.Name"></MudChip>
+                }
+            </MudChipSet>
+        </div>
+        
+        <MudButton Class="mt-3" Variant="Variant.Outlined" Color="Color.Success" FullWidth="true" OnClick="Selected">완료</MudButton>
+
+    </MudPaper>
+</div>
+
+
+@code {
+    private List<People> peoples = new List<People>();
+    MudChip[] selected;
+
+    protected override async Task OnInitializedAsync()
+    {
+        peoples = (await _Service.GetPeopleAsync()).OrderBy(i => i.Name).ToList();
+    }
+
+    private async Task Selected()
+    {
+        List<People> selectedpeoples = peoples.Where(i => selected.Any(s => s.Text == i.Name)).ToList();
+
+        _Service.Matcheds = await _Service.GetMatchAsync(selectedpeoples, 2);
+
+        _navManager.NavigateTo("/");
+    }
+}

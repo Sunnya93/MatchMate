@@ -1,0 +1,31 @@
+﻿<div class="d-flex justify-content-evenly gap-5 flex-wrap">
+    <MudColorPicker Label="색상선택" @bind-Text="@MyPlace.Color" Style="@($"color: {MyPlace.Color};")" Placeholder="색상 선택" />
+    <MudTextField T="string" @bind-Value="MyPlace.Name" Immediate="true" Label="구역 입력"/>
+    <span class="d-flex flex-fill gap-3">
+        <MudTextField T="int" @bind-Value="MyPlace.MaxTeam" Immediate="true" Label="숫자만 입력" AdornmentText="팀" AdornmentColor="Color.Info"/>
+        <MudIconButton Icon=@Icons.Material.Filled.ExposureNeg1 Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="Negative" />
+        <MudIconButton Icon=@Icons.Material.Filled.ExposurePlus1 Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="Positive" />
+    </span>
+
+</div>
+
+
+@code {
+    [Parameter]
+    public Place MyPlace { get; set; }
+
+    [Parameter]
+    public EventCallback<Place> MyPlaceChanged { get; set; }
+
+    private void Negative()
+    {
+        if (MyPlace.MaxTeam <= 0) return;
+        MyPlace.MaxTeam--;
+    }
+
+    private void Positive()
+    {
+        MyPlace.MaxTeam++;
+    }
+
+}

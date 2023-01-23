@@ -1,107 +1,23 @@
 ﻿@page "/"
+@inject MatchService _Service
 
     <MudCarousel TData="object" Class="mud-width-full" Style="height:600px;">
-
+    @if (Matches is null) return;
+    @foreach (Matched matched in Matches)
+    {
         <MudCarouselItem>
-            <MatchedCard Place="@MatchedMcdonald.Place" MatchedTeam="@MatchedMcdonald.MatchedPerson" />
+            <MatchedCard Place="@matched.Place" MatchedTeam="@matched.MatchedPerson" />
         </MudCarouselItem>
-        <MudCarouselItem>
-            <MatchedCard Place="@MatchedOliveYoung.Place" MatchedTeam="@MatchedOliveYoung.MatchedPerson"/>
-        </MudCarouselItem>
-        <MudCarouselItem>
-            <MatchedCard Place="@MatchedSamsung.Place" MatchedTeam="@MatchedSamsung.MatchedPerson"/>
-        </MudCarouselItem>
+    }
+   
     </MudCarousel>
 
 @code {
 
-
-    [CascadingParameter]
-    public List<Matched> Matches { get; set; }
-
-    private Matched MatchedMcdonald;
-    private Matched MatchedOliveYoung;
-    private Matched MatchedSamsung;
+    private List<Matched> Matches;
 
     protected override void OnInitialized()
     {
-        MatchedMcdonald = new Matched()
-        {  
-            Place = "맥도날드", 
-            MatchedPerson = new List<List<People>>()
-            {
-                new List<People>()
-                {
-                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
-                }
-            }
-        };
-
-        MatchedOliveYoung = new Matched()
-            {
-                Place = "올리브영",
-                MatchedPerson = new List<List<People>>()
-            {
-                new List<People>()
-                {
-                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
-                }
-            }
-            };
-
-        MatchedSamsung = new Matched()
-            {
-                Place = "삼성",
-                MatchedPerson = new List<List<People>>()
-            {
-                new List<People>()
-                {
-                    new People(){ Name = "Sunnya", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Mac", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Apple", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Wook", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Microsoft", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Window", PhoneNumber = "01041812403", Gender = "F"},
-                },
-                new List<People>()
-                {
-                    new People(){ Name = "Henny", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Teacher", PhoneNumber = "01041812403", Gender = "F"},
-                    new People(){ Name = "Sam", PhoneNumber = "01041812403", Gender = "F"},
-                }
-            }
-            };
-
+        Matches = _Service.Matcheds;
     }
 }
