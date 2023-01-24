@@ -47,8 +47,8 @@ namespace MatchMate.Data
         public List<Matched> MakeMatches(List<People> selectedPeople, List<Place> places, int maxMatchedPeople)
         {
             List<Matched> matcheds = new List<Matched>();
-            var malePeople = selectedPeople.FindAll(person => person.Gender == "Male");
-            var femalePeople = selectedPeople.FindAll(person => person.Gender == "Female");
+            var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
+            var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
 
             // Create a new Random object outside of the loops to improve performance
             var random = new Random();
@@ -80,7 +80,7 @@ namespace MatchMate.Data
 
                     matches.Add(group);
                     i += maxMatchedPeople;
-
+                    
                     if (malePeople.Count == 0)
                     {
                         malePeople = femalePeople;

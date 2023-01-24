@@ -11,6 +11,12 @@
     [Parameter]
     public string buttonColor { get; set; }
 
+    [Parameter]
+    public Place PlaceInfo { get; set; }
+
+    [Parameter]
+    public int Order { get; set; }
+
     private string _text { get; set; }
 
     protected override void OnInitialized()
@@ -18,10 +24,17 @@
         _text = string.Join(", ", Matched.Select(p => p.Name));
     }
 
-    private void OpenDialog()
+    private async Task OpenDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var parameters = new DialogParameters { ["Matched"] = Matched };
-        DialogService.Show<MatchedDialog>("팀 수정하기", parameters, options);
+        var dialog = await DialogService.ShowAsync<MatchedDialog>("팀 수정하기", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled)
+        {
+            _text = string.Join(", ", Matched.Select(p => p.Name));
+        }
     }
 }

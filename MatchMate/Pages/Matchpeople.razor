@@ -6,10 +6,10 @@
     <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">봉사자 선택</MudText>
     <MudPaper>
         <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3">
-            <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
+            <MudChipSet @bind-SelectedChips="selected"  MultiSelection="true" Filter="true">
                 @foreach (People people in peoples)
                 {
-                    <MudChip Text="@people.Name"></MudChip>
+                    <MudChip Color="Color.Default" SelectedColor="Color.Success" Text="@people.Name"></MudChip>
                 }
             </MudChipSet>
         </div>
@@ -31,9 +31,9 @@
 
     private async Task Selected()
     {
-        List<People> selectedpeoples = peoples.Where(i => selected.Any(s => s.Text == i.Name)).ToList();
+        List<People> selectedPeople = peoples.Where(i => selected.Any(s => s.Text == i.Name)).ToList();
 
-        _Service.Matcheds = await _Service.GetMatchAsync(selectedpeoples, 2);
+        _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, 2);
 
         _navManager.NavigateTo("/");
     }

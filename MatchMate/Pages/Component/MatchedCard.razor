@@ -3,9 +3,12 @@
     <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">@Place.Name</MudText>
     <MudPaper>
         <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap">
-            @foreach(List<People> MatchedPeople in MatchedTeam)
-            {
-                <MatchedTeam Matched="MatchedPeople" buttonColor="@Place.Color"/>
+            @{
+                int order = 0;
+                @foreach(List<People> MatchedPeople in MatchedTeam)
+                {
+                    <MatchedTeam Matched="MatchedPeople" buttonColor="@Place.Color" PlaceInfo="Place" Order="order++"/>
+                }
             }
         </div>
     </MudPaper>
