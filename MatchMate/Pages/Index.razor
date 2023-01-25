@@ -39,8 +39,8 @@ else
     {
         if (Sms.Default.IsComposeSupported)
         {
-            Tuple<string, List<People>> _messageService = _Service.SetMeesageAndContact();
-            var message = new SmsMessage(_messageService.Item1, _messageService.Item2.Select(i => i.PhoneNumber).ToList());
+            Tuple<string, List<People>> _messageInfo = _Service.SetMeesageAndContact();
+            var message = new SmsMessage(_messageInfo.Item1, _messageInfo.Item2.Select(i => i.PhoneNumber).ToList());
 
             await Sms.Default.ComposeAsync(message);
         }

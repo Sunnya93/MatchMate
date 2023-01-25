@@ -1,6 +1,7 @@
 ﻿@page "/matchpeople"
 @inject MatchService _Service
 @inject NavigationManager _navManager
+@inject IDialogService DialogService
 
 <div>
     <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">봉사자 선택</MudText>
@@ -34,6 +35,13 @@
     private async Task Selected()
     {
         List<People> selectedPeople = peoples.Where(i => selected.Any(s => s.Text == i.Name)).ToList();
+
+        if(selectedPeople.Count > 40)
+        {
+            var parameters = new DialogParameters { ["Content"] = $"현재 선택하신 봉사자는 {selectedPeople.Count}명 입니다.\r\n{selectedPeople.Count - 40}명 선택을 취소하세요." };
+            DialogService.Show<ConfirmDialog>("40명 초과", parameters);
+            return;
+        }
 
         _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, MaxMatchedCount);
         _navManager.NavigateTo("/");

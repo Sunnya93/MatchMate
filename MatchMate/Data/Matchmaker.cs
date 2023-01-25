@@ -47,8 +47,6 @@ namespace MatchMate.Data
         public List<Matched> MakeMatches(List<People> selectedPeople, List<Place> places, int maxMatchedPeople)
         {
             List<Matched> matcheds = new List<Matched>();
-            var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
-            var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
 
             // Create a new Random object outside of the loops to improve performance
             var random = new Random();
@@ -56,35 +54,55 @@ namespace MatchMate.Data
             // Loop through the places
             foreach (Place place in places)
             {
-                if (malePeople.Count == 0) return matcheds;
+                if (selectedPeople.Count == 0) return matcheds;
 
                 var matches = new List<List<People>>();
                 var matchedPeople = new List<People>();
+                bool SetBrother = false;
 
-                int i = 0;
-                while (malePeople.Count >= 0 && matches.Count < place.MaxTeam)
+                while (matches.Count < place.MaxTeam)
                 {
                     var group = new List<People>();
                     int j = 0;
-                    while (j < maxMatchedPeople && malePeople.Count > 0)
+                    var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
+                    var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
+
+                    //형제 짝 먼저 배정
+                    if ((malePeople.Count > 0 && !SetBrother) || femalePeople.Count == 0)
                     {
-                        int index = random.Next(malePeople.Count);
-                        if (!matchedPeople.Contains(malePeople[index]))
+                        while (j < maxMatchedPeople)
                         {
-                            matchedPeople.Add(malePeople[index]);
-                            group.Add(malePeople[index]);
-                            malePeople.RemoveAt(index);
-                            j++;
+                            int index = random.Next(malePeople.Count);
+                            if (!matchedPeople.Contains(malePeople[index]))
+                            {
+                                matchedPeople.Add(malePeople[index]);
+                                group.Add(malePeople[index]);
+                                selectedPeople.Remove(malePeople[index]);
+                                j++;
+                            }
                         }
+                        matches.Add(group);
+                        SetBrother = true;
                     }
 
-                    matches.Add(group);
-                    i += maxMatchedPeople;
-                    
-                    if (malePeople.Count == 0)
+                   //자매 짝 배정
+                    group = new List<People>();
+                    j = 0;
+
+                    if (femalePeople.Count > 0)
                     {
-                        malePeople = femalePeople;
-                        continue;
+                        while (j < maxMatchedPeople)
+                        {
+                            int index = random.Next(femalePeople.Count);
+                            if (!matchedPeople.Contains(femalePeople[index]))
+                            {
+                                matchedPeople.Add(femalePeople[index]);
+                                group.Add(femalePeople[index]);
+                                selectedPeople.Remove(femalePeople[index]);
+                                j++;
+                            }
+                        }
+                        matches.Add(group);
                     }
                 }
 
