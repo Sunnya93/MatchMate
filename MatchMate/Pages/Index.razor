@@ -21,7 +21,7 @@ else
 
     </MudCarousel>
 
-    <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="Send">문자보내기</MudButton>
+    <MudButton Variant="Variant.Filled" FullWidth="true" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="Send">문자보내기</MudButton>
 
 }
 
@@ -45,5 +45,4 @@ else
             await Sms.Default.ComposeAsync(message);
         }
     }
-
 }

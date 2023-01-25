@@ -1,0 +1,37 @@
+﻿<span class="d-flex flex-fill gap-3 @Class">
+    <MudTextField T="int" @bind-Value="Count" Immediate="true" Label=@LabelText AdornmentText=@AdornmentText AdornmentColor="Color.Info" />
+    <MudIconButton Icon=@Icons.Material.Filled.ExposureNeg1 Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="Negative" />
+    <MudIconButton Icon=@Icons.Material.Filled.ExposurePlus1 Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="Positive" />
+</span>
+
+
+@code {
+
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public int Count { get; set; }
+
+    [Parameter]
+    public EventCallback<int> CountChanged { get; set; }
+
+    [Parameter]
+    public string LabelText { get; set; }
+
+    [Parameter]
+    public string AdornmentText { get; set; }
+
+    private void Negative()
+    {
+        if (Count <= 0) return;
+        Count--;
+        CountChanged.InvokeAsync(Count);
+    }
+
+    private void Positive()
+    {
+        Count++;
+        CountChanged.InvokeAsync(Count);
+    }
+}
