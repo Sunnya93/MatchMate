@@ -8,7 +8,7 @@
         @{
             foreach (var person in Finds)
             {
-                <MudListItem Text="@person.Name" Icon="@Icons.Material.Filled.Person" OnClick="@(() => ClickedList(person.Name))"/>
+                <MudListItem Text="@person.Name" Icon="@Icons.Material.Filled.Person" OnClick="@(() => ClickedList(person.Name!))"/>
             }
         }
     </MudList>
@@ -18,16 +18,16 @@
 @code {
 
     [Parameter]
-    public string searchValue { get; set; }
+    public string? searchValue { get; set; }
 
     [Parameter]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     [Parameter]
     public EventCallback<string> searchValueChanged { get; set; }
 
     [Parameter]
-    public List<People> Peoples { get; set; }
+    public List<People>? Peoples { get; set; }
 
     private List<People> Finds = new List<People>();
 
@@ -42,7 +42,7 @@
         await ClickedList(Value);
 
         if (string.IsNullOrEmpty(searchValue)) return;
-        Finds = Peoples.Where(i => i.Name.ToLower().Contains(searchValue.ToLower())).ToList();
+        Finds = Peoples?.Where(i => i.Name!.ToLower().Contains(searchValue.ToLower())).ToList()!;
     }
 
 }

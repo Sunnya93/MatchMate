@@ -2,7 +2,8 @@
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-<Router AppAssembly="@typeof(Main).Assembly">
+<Router AppAssembly="@typeof(Main).Assembly"
+        AdditionalAssemblies="new[] { typeof(MainLayout).Assembly}">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />

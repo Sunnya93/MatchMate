@@ -1,0 +1,24 @@
+﻿
+<MudPaper Class="gap-5">
+    <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">@Place!.Name</MudText>
+    <MudPaper>
+        <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap">
+            @foreach(List<People> MatchedPeople in MatchedTeam!)
+            {
+                <MatchedTeam Matched="MatchedPeople" buttonColor="@Place!.Color"/>
+            }
+        </div>
+    </MudPaper>
+    <MudButton Class="mt-3 mb-3" Variant="Variant.Outlined" Style="@($"color: {Place!.Color}; border-color:{Place!.Color};")" FullWidth="true" OnClick="Add">팀 추가하기</MudButton>
+</MudPaper>
+
+@code {
+
+    [Parameter]
+    public List<List<People>>? MatchedTeam { get; set; }
+
+    [Parameter]
+    public Place? Place { get; set; }
+
+    private void Add() => MatchedTeam!.Add(new List<People>());
+}

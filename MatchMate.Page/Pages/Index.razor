@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject MatchService _Service
+@inject IMessageService _MessageSerivce
 
 @if (Matches is null || Matches.Count == 0)
 {
@@ -28,7 +29,7 @@ else
 
 @code {
 
-    private List<Matched> Matches;
+    private List<Matched>? Matches;
 
     protected override void OnInitialized()
     {
@@ -37,12 +38,8 @@ else
 
     private async Task Send()
     {
-        if (Sms.Default.IsComposeSupported)
-        {
-            Tuple<string, List<People>> _messageInfo = _Service.SetMeesageAndContact();
-            var message = new SmsMessage(_messageInfo.Item1, _messageInfo.Item2.Select(i => i.PhoneNumber).ToList());
+        Tuple<string, List<People>> _messageInfo = _Service.SetMeesageAndContact();
 
-            await Sms.Default.ComposeAsync(message);
-        }
+        await _MessageSerivce.SendMessageAsync(_messageInfo.Item1, _messageInfo.Item2.Select(i => i.PhoneNumber).ToList()!);
     }
 }

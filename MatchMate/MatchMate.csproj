@@ -51,11 +51,10 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-        <PackageReference Include="MudBlazor" Version="6.1.7" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MatchMate.Class\MatchMate.Class.csproj" />
+      <ProjectReference Include="..\MatchMate.Page\MatchMate.Page.csproj" />
     </ItemGroup>
 
 </Project>

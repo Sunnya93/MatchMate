@@ -15,7 +15,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="Add"></MudIconButton>
             </div>
             <MudChipSet AllClosable="true" OnClose="Closed">
-                @foreach (People value in Matched)
+                @foreach (People value in Matched!)
                 {
                     <MudChip Text="@value.Name"></MudChip>
                 }
@@ -27,25 +27,25 @@
     </DialogActions>
 </MudDialog>
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
 
-    [Parameter] public List<People> Matched { get; set; }
+    [Parameter] public List<People>? Matched { get; set; }
 
-    private List<People> Peoples;
-    private string Name;
+    private List<People>? Peoples;
+    private string? Name;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        Peoples = await _Service.GetPeopleAsync();
+        Peoples = _Service.GetPeopleAsync();
     }
 
     public void Add()
     {
-        People people = Peoples.Where(i => i.Name == Name).FirstOrDefault();
+        People people = Peoples!.Where(i => i.Name == Name).FirstOrDefault()!;
         if (people is null) return;
-        Matched.Add(people);
+        Matched!.Add(people);
     }
 
-    public void Closed(MudChip chip) => Matched.RemoveAll(i => i.Name == chip.Text);
-    private void Cancel() => MudDialog.Cancel();
+    public void Closed(MudChip chip) => Matched!.RemoveAll(i => i.Name == chip.Text);
+    private void Cancel() => MudDialog!.Cancel();
 }

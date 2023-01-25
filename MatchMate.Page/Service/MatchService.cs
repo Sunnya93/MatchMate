@@ -1,35 +1,37 @@
 ﻿using MatchMate.Class;
+using MatchMate.Page.Logics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MatchMate.Data
+namespace MatchMate.Page.Service
 {
     public class MatchService
     {
-        public List<Matched> Matcheds { get; set; }
-        public List<Place> Places { get; set; }
+        public List<Matched>? Matcheds { get; set; }
+        public List<Place>? Places { get; set; }
 
         public Task<List<Matched>> GetMatchAsync(List<People> peoples, int MaxPeopleCount)
         {
-            Matchmaker maker = new Matchmaker();
-            return Task.FromResult(maker.MakeMatches(peoples, Places.Where(i => i.MaxTeam != 0).ToList(), MaxPeopleCount));
+            Matchmaker maker = new Matchmaker(peoples);
+            return Task.FromResult(maker.MakeMatches(peoples, Places!.Where(i => i.MaxTeam != 0).ToList(), MaxPeopleCount));
         }
 
-        public async Task<List<People>> GetPeopleAsync()
+        public List<People> GetPeopleAsync()
         {
-            string json;
+            var path = Path.Combine(AppContext.BaseDirectory, "wwwroot/data/Peoples.json");
 
-            using var stream = await FileSystem.OpenAppPackageFileAsync("wwwroot/data/Peoples.json");
-            using var reader = new StreamReader(stream);
-
-            json = await reader.ReadToEndAsync();
-
-            return JsonSerializer.Deserialize<List<People>>(json);
+            using (var sr = new StreamReader(path))
+            {
+                string jsonData = sr.ReadToEnd();
+                return JsonSerializer.Deserialize<List<People>>(jsonData)!;
+            }
         }
 
         public Tuple<string, List<People>> SetMeesageAndContact()
@@ -39,11 +41,11 @@ namespace MatchMate.Data
 
             Text.Append($"{DateTime.Now.ToString("MM/dd")} 전시대 팀배정\r\n");
 
-            foreach(Matched matched in Matcheds)
+            foreach (Matched matched in Matcheds!)
             {
-                Text.Append($"{matched.Place.Name}-");
+                Text.Append($"{matched.Place!.Name}-");
                 int OrderNumber = 0;
-                foreach(List<People> peoples in matched.MatchedPerson)
+                foreach (List<People> peoples in matched.MatchedPerson!)
                 {
                     Text.Append($"{++OrderNumber}{string.Join(",", peoples.Select(i => i.Name))}");
                     people.AddRange(peoples);

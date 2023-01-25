@@ -1,22 +1,18 @@
 ﻿using MatchMate.Class;
 
-namespace MatchMate.Data
+namespace MatchMate.Page.Logics
 {
     class Matchmaker
     {
         private readonly List<People> _people;
         private readonly Random _random = new Random();
 
-        public Matchmaker()
-        {
-        }
-
         public Matchmaker(List<People> people)
         {
             _people = people;
         }
 
-        public List<Tuple<People, People>> MakeMatches()
+        public List<Tuple<People, People>>? MakeMatches()
         {
             var sameSexPeople = _people;
             if (sameSexPeople.Count < 2) return null;
@@ -65,10 +61,9 @@ namespace MatchMate.Data
                     var group = new List<People>();
                     int j = 0;
                     var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
-                    var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
 
                     //형제 짝 먼저 배정
-                    if ((malePeople.Count > 0 && !SetBrother) || femalePeople.Count == 0)
+                    if ((malePeople.Count > 0 && !SetBrother) || selectedPeople.FindAll(person => person.Gender == "자매").Count == 0)
                     {
                         while (j < maxMatchedPeople)
                         {
@@ -88,6 +83,7 @@ namespace MatchMate.Data
                    //자매 짝 배정
                     group = new List<People>();
                     j = 0;
+                    var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
 
                     if (femalePeople.Count > 0)
                     {

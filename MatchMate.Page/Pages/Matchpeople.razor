@@ -24,17 +24,24 @@
 
 @code {
     private List<People> peoples = new List<People>();
-    MudChip[] selected;
+    MudChip[]? selected;
     private int MaxMatchedCount = 2;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        peoples = (await _Service.GetPeopleAsync()).OrderBy(i => i.Name).ToList();
+        peoples = (_Service.GetPeopleAsync()).OrderBy(i => i.Name).ToList();
     }
 
     private async Task Selected()
     {
-        List<People> selectedPeople = peoples.Where(i => selected.Any(s => s.Text == i.Name)).ToList();
+        if (selected is null)
+        {
+            var parameters = new DialogParameters { ["Content"] = $"봉사자를 선택해주세요." };
+            DialogService.Show<ConfirmDialog>("알림", parameters);
+            return;
+        }
+
+        List<People> selectedPeople = peoples.Where(i => selected!.Any(s => s.Text == i.Name)).ToList();
 
         if(selectedPeople.Count > 40)
         {

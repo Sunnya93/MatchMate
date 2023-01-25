@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using MatchMate.Data;
 using MudBlazor.Services;
+using MatchMate.Page.Service;
+using MatchMate.Service;
 
 namespace MatchMate;
 
@@ -24,6 +25,8 @@ public static class MauiProgram
 #endif
         builder.Services.AddMudServices();
 		builder.Services.AddSingleton<MatchService>();
+		builder.Services.AddScoped<HttpClientService>();
+		builder.Services.AddScoped<IMessageService, MessageService>();
 
 		return builder.Build();
 	}
