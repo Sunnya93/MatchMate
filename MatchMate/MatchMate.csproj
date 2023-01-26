@@ -57,8 +57,4 @@
       <ProjectReference Include="..\MatchMate.Page\MatchMate.Page.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="wwwroot\data\" />
-    </ItemGroup>
-
 </Project>
