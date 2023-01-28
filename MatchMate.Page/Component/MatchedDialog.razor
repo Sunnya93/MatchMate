@@ -41,6 +41,7 @@
 
     public void Add()
     {
+				//이미 service.matched 에 있는 사람의 경우 삭제한 후 이 리스트에 추가한다
         People people = Peoples!.Where(i => i.Name == Name).FirstOrDefault()!;
         if (people is null) return;
         Matched!.Add(people);
