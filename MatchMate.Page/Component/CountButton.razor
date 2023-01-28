@@ -24,7 +24,7 @@
 
     private void Negative()
     {
-        if (Count <= 0) return;
+        if (Count <= 0 || Count > 5) return;
         Count--;
         CountChanged.InvokeAsync(Count);
     }
