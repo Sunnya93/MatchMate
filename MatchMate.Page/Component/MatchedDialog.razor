@@ -1,6 +1,7 @@
 ﻿@inject ISnackbar Snackbar
 @inject MatchService _Service
 @inject IDialogService DialogService
+@inject IReadFileService FileService
 
 <MudDialog>
     <TitleContent>
@@ -35,9 +36,10 @@
     private List<People>? Peoples;
     private string? Name;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Peoples = _Service.GetPeopleAsync();
+        var json = await FileService.ReadFile("wwwroot/data/Peoples.json");
+        Peoples = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();
     }
 
     public async void Add()

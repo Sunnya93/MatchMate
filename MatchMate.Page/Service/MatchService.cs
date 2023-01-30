@@ -25,15 +25,9 @@ namespace MatchMate.Page.Service
             return Task.FromResult(matcheds);
         }
 
-        public List<People> GetPeopleAsync()
+        public List<People> GetPeopleAsync(string json)
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "wwwroot/data/Peoples.json");
-
-            using (var sr = new StreamReader(path))
-            {
-                string jsonData = sr.ReadToEnd();
-                return JsonSerializer.Deserialize<List<People>>(jsonData)!;
-            }
+            return JsonSerializer.Deserialize<List<People>>(json)!;
         }
 
         public List<Place> GetInitPlace()

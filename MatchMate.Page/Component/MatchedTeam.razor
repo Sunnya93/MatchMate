@@ -16,6 +16,11 @@
     [Parameter]
     public EventCallback ReRenderCallback { get; set; }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(!firstRender) _text = string.Join(", ", Matched!.Select(p => p.Name));
+    }
+
     protected override void OnInitialized()
     {
         _text = string.Join(", ", Matched!.Select(p => p.Name));

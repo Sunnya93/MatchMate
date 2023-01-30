@@ -2,6 +2,7 @@
 @inject MatchService _Service
 @inject NavigationManager _navManager
 @inject IDialogService DialogService
+@inject IReadFileService FileService
 
 <div>
     <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">봉사자 선택</MudText>
@@ -32,9 +33,10 @@
     MudChip[]? selected;
     private int MaxMatchedCount = 2;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        peoples = (_Service.GetPeopleAsync()).OrderBy(i => i.Name).ToList();
+        var json = await FileService.ReadFile("wwwroot/data/Peoples.json");
+        peoples = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();
     }
 
     private async Task Selected()

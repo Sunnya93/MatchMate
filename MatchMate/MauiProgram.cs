@@ -26,8 +26,9 @@ public static class MauiProgram
         builder.Services.AddMudServices();
 		builder.Services.AddSingleton<MatchService>();
 		builder.Services.AddScoped<HttpClientService>();
-		builder.Services.AddScoped<IMessageService, MessageService>();
+        builder.Services.AddScoped<IMessageService, MessageService>();
+        builder.Services.AddScoped<IReadFileService, ReadFileService>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }
