@@ -9,7 +9,12 @@
         <CountButton Class="m-3 pt-3" @bind-Count=@MaxMatchedCount LabelText="몇 명씩 하나요?" AdornmentText="2"/>
         <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3">
             <MudChipSet @bind-SelectedChips="selected"  MultiSelection="true" Filter="true">
-                @foreach (People people in peoples)
+                @foreach (People people in peoples.Where(i => i.Gender!.Equals("형제")))
+                {
+                    <MudChip Color="Color.Default" SelectedColor="Color.Success" Text="@people.Name"></MudChip>
+                }
+                <MudDivider DividerType="DividerType.Middle" Class="my-6" />                
+                @foreach (People people in peoples.Where(i => i.Gender!.Equals("자매")))
                 {
                     <MudChip Color="Color.Default" SelectedColor="Color.Success" Text="@people.Name"></MudChip>
                 }

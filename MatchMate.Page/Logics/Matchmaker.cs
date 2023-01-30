@@ -65,7 +65,7 @@ namespace MatchMate.Page.Logics
                     //형제 짝 먼저 배정
                     if ((malePeople.Count > 0 && !SetBrother) || selectedPeople.FindAll(person => person.Gender == "자매").Count == 0)
                     {
-                        while (j < maxMatchedPeople)
+                        while (j < maxMatchedPeople && j < malePeople.Count)
                         {
                             int index = random.Next(malePeople.Count);
                             if (!matchedPeople.Contains(malePeople[index]))
@@ -87,7 +87,7 @@ namespace MatchMate.Page.Logics
 
                     if (femalePeople.Count > 0)
                     {
-                        while (j < maxMatchedPeople)
+                        while (j < maxMatchedPeople && j < femalePeople.Count)
                         {
                             int index = random.Next(femalePeople.Count);
                             if (!matchedPeople.Contains(femalePeople[index]))

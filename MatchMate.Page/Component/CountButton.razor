@@ -8,7 +8,7 @@
 @code {
 
     [Parameter]
-    public string Class { get; set; }
+    public string? Class { get; set; }
 
     [Parameter]
     public int Count { get; set; }
@@ -17,20 +17,21 @@
     public EventCallback<int> CountChanged { get; set; }
 
     [Parameter]
-    public string LabelText { get; set; }
+    public string? LabelText { get; set; }
 
     [Parameter]
-    public string AdornmentText { get; set; }
+    public string? AdornmentText { get; set; }
 
     private void Negative()
     {
-        if (Count <= 0 || Count > 5) return;
+        if (Count == 0) return;
         Count--;
         CountChanged.InvokeAsync(Count);
     }
 
     private void Positive()
     {
+        if (Count == 4) return;
         Count++;
         CountChanged.InvokeAsync(Count);
     }

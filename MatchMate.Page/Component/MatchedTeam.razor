@@ -6,16 +6,19 @@
 
 @code {
     [Parameter]
-    public List<People> Matched { get; set; }
+    public List<People>? Matched { get; set; }
 
     [Parameter]
-    public string buttonColor { get; set; }
+    public string? buttonColor { get; set; }
 
-    private string _text { get; set; }
+    private string? _text { get; set; }
+
+    [Parameter]
+    public EventCallback ReRenderCallback { get; set; }
 
     protected override void OnInitialized()
     {
-        _text = string.Join(", ", Matched.Select(p => p.Name));
+        _text = string.Join(", ", Matched!.Select(p => p.Name));
     }
 
     private async Task OpenDialog()
@@ -28,7 +31,8 @@
 
         if (result.Canceled)
         {
-            _text = string.Join(", ", Matched.Select(p => p.Name));
+            _text = string.Join(", ", Matched!.Select(p => p.Name));
+            await ReRenderCallback.InvokeAsync();
         }
     }
 }

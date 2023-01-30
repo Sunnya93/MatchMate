@@ -12,11 +12,11 @@
 }
 else
 {
-    <MudCarousel TData="object" Class="mud-width-full" Style="height:600px;">
+    <MudCarousel TData="object" Class="mud-width-full" Style="height:600px;" AutoCycle=false>
         @foreach (Matched matched in Matches)
         {
             <MudCarouselItem>
-                <MatchedCard Place="@matched.Place" MatchedTeam="@matched.MatchedPerson" />
+                <MatchedCard Place="@matched.Place" MatchedTeam="@matched.MatchedPerson" RerenderCallback="Rerender"/>
             </MudCarouselItem>
         }
 
@@ -41,5 +41,10 @@ else
         Tuple<string, List<People>> _messageInfo = _Service.SetMeesageAndContact();
 
         await _MessageSerivce.SendMessageAsync(_messageInfo.Item1, _messageInfo.Item2.Select(i => i.PhoneNumber).ToList()!);
+    }
+
+    private void Rerender()
+    {
+        StateHasChanged();
     }
 }

@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap">
             @foreach(List<People> MatchedPeople in MatchedTeam!)
             {
-                <MatchedTeam Matched="MatchedPeople" buttonColor="@Place!.Color"/>
+                <MatchedTeam Matched="MatchedPeople" buttonColor="@Place!.Color" ReRenderCallback="Callback"/>
             }
         </div>
     </MudPaper>
@@ -20,5 +20,13 @@
     [Parameter]
     public Place? Place { get; set; }
 
+    [Parameter]
+    public EventCallback RerenderCallback { get; set; }
+
     private void Add() => MatchedTeam!.Add(new List<People>());
+
+    private async void Callback()
+    {
+        await RerenderCallback.InvokeAsync();
+    }
 }

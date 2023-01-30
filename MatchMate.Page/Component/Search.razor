@@ -29,12 +29,16 @@
     [Parameter]
     public List<People>? Peoples { get; set; }
 
+    [Parameter]
+    public EventCallback<string> ListCliecked { get; set; }
+
     private List<People> Finds = new List<People>();
 
     private async Task ClickedList(string Name)
     {
         searchValue = Name;
         await searchValueChanged.InvokeAsync(searchValue);
+        await ListCliecked.InvokeAsync(searchValue);
     }
 
     private async Task OnInput(string Value)

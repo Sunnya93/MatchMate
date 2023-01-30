@@ -11,7 +11,7 @@
     <DialogContent>
         <MudContainer Style="max-height: 300px; overflow-y: scroll">
             <div class="d-flex pb-3">
-                <Search Peoples="Peoples" Title="추가할 사람" @bind-searchValue="@Name" />
+                <Search Peoples="Peoples" Title="추가할 사람" @bind-searchValue="@Name" ListCliecked="Add"/>
                 <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="Add"></MudIconButton>
             </div>
             <MudChipSet AllClosable="true" OnClose="Closed">
@@ -41,7 +41,12 @@
 
     public void Add()
     {
-				//이미 service.matched 에 있는 사람의 경우 삭제한 후 이 리스트에 추가한다
+        //이미 추가된 사람은 리스트에서 제외
+        foreach (var matched in _Service.Matcheds!)
+        {
+            matched.MatchedPerson!.ForEach(peopleList => peopleList.RemoveAll(person => person.Name == Name));
+        }
+
         People people = Peoples!.Where(i => i.Name == Name).FirstOrDefault()!;
         if (people is null) return;
         Matched!.Add(people);
