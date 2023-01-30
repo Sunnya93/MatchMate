@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject MatchService _Service
 @inject IMessageService _MessageSerivce
+@inject IDialogService DialogService
 
 @if (Matches is null || Matches.Count == 0)
 {
@@ -21,8 +22,8 @@ else
         }
 
     </MudCarousel>
-
-    <MudButton Variant="Variant.Filled" FullWidth="true" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="Send">문자보내기</MudButton>
+    <MudButton Variant="Variant.Outlined" FullWidth="true" EndIcon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="AddPlace">구역 추가하기</MudButton>
+    <MudButton Class="mt-3" Variant="Variant.Filled" FullWidth="true" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary" OnClick="Send">문자보내기</MudButton>
 
 }
 
@@ -38,9 +39,16 @@ else
 
     private async Task Send()
     {
-        Tuple<string, List<People>> _messageInfo = _Service.SetMeesageAndContact();
+        Tuple<string, List<People>> _messageInfo = _Service.SetMessageAndContact();
 
         await _MessageSerivce.SendMessageAsync(_messageInfo.Item1, _messageInfo.Item2.Select(i => i.PhoneNumber).ToList()!);
+    }
+
+    private async Task AddPlace()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var dialog = await DialogService.ShowAsync<AddPlaceDialog>("구역 추가하기", options);
+        var result = await dialog.Result;
     }
 
     private void Rerender()

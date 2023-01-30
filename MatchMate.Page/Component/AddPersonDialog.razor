@@ -1,0 +1,39 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-3 mb-n1" />
+            봉사자 신규 추가
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if(people is not null)
+        {
+            <MudTextField @bind-Value=people.Name Label="성함" ReadOnly="false"/>
+            <MudSelect T="string" Label="성별" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" @bind-Value=people.Gender>
+                <MudSelectItem Value="@("형제")" />
+                <MudSelectItem Value="@("자매")" />
+            </MudSelect>
+            <MudTextField @bind-Value=people.PhoneNumber Label="연락처" ReadOnly="false" />
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">닫기</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">저장</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    private People? people;
+
+    protected override void OnInitialized()
+    {
+        people = new People { Name = Name };
+    }
+
+    void Submit() => MudDialog!.Close(DialogResult.Ok(people));
+    void Cancel() => MudDialog!.Cancel();
+}

@@ -20,7 +20,9 @@ namespace MatchMate.Page.Service
         public Task<List<Matched>> GetMatchAsync(List<People> peoples, int MaxPeopleCount)
         {
             Matchmaker maker = new Matchmaker(peoples);
-            return Task.FromResult(maker.MakeMatches(peoples, Places!.Where(i => i.MaxTeam != 0).ToList(), MaxPeopleCount));
+            List<Matched> matcheds = maker.MakeMatches(peoples, Places!.Where(i => i.MaxTeam != 0).ToList(), MaxPeopleCount);
+            Places = matcheds.Select(i => i.Place).ToList()!;
+            return Task.FromResult(matcheds);
         }
 
         public List<People> GetPeopleAsync()
@@ -34,7 +36,21 @@ namespace MatchMate.Page.Service
             }
         }
 
-        public Tuple<string, List<People>> SetMeesageAndContact()
+        public List<Place> GetInitPlace()
+        {
+            List<Place> places = new List<Place>()
+            {
+                new Place{ Name = "맥도날드", Color = "#f6b910", MaxTeam = 0 },
+                new Place{ Name = "올리브영", Color = "#0bf249", MaxTeam = 0 },
+                new Place{ Name = "가락115동", Color = "#1cdbef", MaxTeam = 0 },
+                new Place{ Name = "삼성빌딩", Color = "#0497f8", MaxTeam = 0 },
+                new Place{ Name = "프라임병원", Color = "#f70505", MaxTeam = 0}
+            };
+
+            return places;
+        }
+
+        public Tuple<string, List<People>> SetMessageAndContact()
         {
             StringBuilder Text = new StringBuilder();
             List<People> people = new List<People>();

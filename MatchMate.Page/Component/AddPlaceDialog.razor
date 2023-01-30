@@ -1,0 +1,49 @@
+﻿@inject MatchService _Service
+
+<MudDialog>
+    <DialogContent>
+        <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="true">
+            @if(places is not null)
+            {
+                @foreach (Place place in places)
+                {
+                    <MudChip Text="@place.Name" Style="@($"background-color: {place.Color}; color: white;")"></MudChip>
+                }
+            }
+        </MudChipSet>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">닫기</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">확인</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    MudChip[]? selected;
+
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+
+    private List<Place>? places;
+
+    protected override void OnInitialized()
+    {
+        places = _Service.GetInitPlace();
+        places.RemoveAll(p => _Service.Places!.Any(p2 => p2.Name == p.Name));
+    }
+
+    void Submit()
+    {
+        if (selected is not null)
+        {
+            foreach (Place match in places!.Where(i => selected.Any(s => s.Text == i.Name)).ToList())
+            {
+                _Service.Places!.Add(match);
+                _Service.Matcheds!.Add(new Matched { Place = match, MatchedPerson = new List<List<People>>() });
+            }
+        } 
+
+        MudDialog!.Close(DialogResult.Ok(true));
+    }
+
+    void Cancel() => MudDialog!.Cancel();
+}

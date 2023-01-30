@@ -34,19 +34,22 @@
 
     private List<People> Finds = new List<People>();
 
-    private async Task ClickedList(string Name)
+    private async Task ValueChanged(string Value)
     {
-        searchValue = Name;
+        searchValue = Value;
         await searchValueChanged.InvokeAsync(searchValue);
+    }
+
+    private async Task ClickedList(string Value)
+    {
+        await ValueChanged(Value);
         await ListCliecked.InvokeAsync(searchValue);
     }
 
     private async Task OnInput(string Value)
     {
-        await ClickedList(Value);
-
-        if (string.IsNullOrEmpty(searchValue)) return;
-        Finds = Peoples?.Where(i => i.Name!.ToLower().Contains(searchValue.ToLower())).ToList()!;
+        await ValueChanged(Value);
+        if (!string.IsNullOrEmpty(searchValue)) Finds = Peoples?.Where(i => i.Name!.ToLower().Contains(searchValue.ToLower())).ToList()!;
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿@inject ISnackbar Snackbar
 @inject MatchService _Service
+@inject IDialogService DialogService
 
 <MudDialog>
     <TitleContent>
@@ -39,17 +40,29 @@
         Peoples = _Service.GetPeopleAsync();
     }
 
-    public void Add()
+    public async void Add()
     {
         //이미 추가된 사람은 리스트에서 제외
         foreach (var matched in _Service.Matcheds!)
         {
             matched.MatchedPerson!.ForEach(peopleList => peopleList.RemoveAll(person => person.Name == Name));
         }
-
         People people = Peoples!.Where(i => i.Name == Name).FirstOrDefault()!;
-        if (people is null) return;
-        Matched!.Add(people);
+        if (people is not null) Matched!.Add(people);
+        else
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var parameters = new DialogParameters { ["Name"] = Name };
+            var dialog = await DialogService.ShowAsync<AddPersonDialog>("신규 봉사자 추가", parameters, options);
+            var result = await dialog.Result;
+
+            if (!result.Canceled)
+            {
+                People newpeople = (People)result.Data;
+                Matched!.Add(newpeople);
+                StateHasChanged();
+            }
+        }
     }
 
     public void Closed(MudChip chip) => Matched!.RemoveAll(i => i.Name == chip.Text);

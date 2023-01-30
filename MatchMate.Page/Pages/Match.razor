@@ -3,33 +3,37 @@
 
 <div>
     <MudText Typo="Typo.h4" Align="Align.Center"  Class="p-5">구역 팀 배정</MudText>
+    @if(places is not null)
+    {
         @foreach (Place place in places)
         {
             <MudPaper Class="ma-4 d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3" Elevation="3">
-                    <PlaceButton MyPlace="place"/>
-            </MudPaper>
+                <div class="d-flex justify-content-evenly gap-5 flex-wrap">
+                    <MudColorPicker Label="색상선택" @bind-Text="@place.Color" Style="@($"color: {place!.Color};")" Placeholder="색상 선택" />
+                    <MudTextField T="string" @bind-Value="place.Name" Immediate="true" Label="구역 입력" />
+                    <CountButton @bind-Count="place.MaxTeam" LabelText="숫자만 입력" AdornmentText="구역 팀 수" />
+                </div>
+        </MudPaper>
         }
-
+    }
     <div class="m-3">
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true" OnClick="Add">새로운 구역 추가하기</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true" OnClick="Add">새로운 구역 장소 추가하기</MudButton>
         <MudButton Class="mt-3" Variant="Variant.Filled" Color="Color.Success" FullWidth="true" Href="matchpeople" OnClick="Save">봉사자 체크하기</MudButton>
     </div>
         
 </div>
 
 @code {
-    private List<Place> places = new List<Place>()
+    private List<Place>? places;
+
+    protected override void OnInitialized()
     {
-        new Place{ Name = "맥도날드", Color = "#f6b910", MaxTeam = 0 },
-        new Place{ Name = "올리브영", Color = "#0bf249", MaxTeam = 0 },
-        new Place{ Name = "가락115동", Color = "#1cdbef", MaxTeam = 0 },
-        new Place{ Name = "삼성빌딩", Color = "#0497f8", MaxTeam = 0 },
-        new Place{ Name = "프라임병원", Color = "#f70505", MaxTeam = 0}
-    };
+        places = _Service.GetInitPlace();
+    }
 
     private void Add()
     {
-        places.Add(new Place());
+        places!.Add(new Place());
     }
 
     private void Save()
