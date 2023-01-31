@@ -9,7 +9,7 @@
     <MudPaper>
         <CountButton Class="m-3 pt-3" @bind-Count=@MaxMatchedCount LabelText="몇 명씩 하나요?" AdornmentText="2"/>
         <div class="d-flex justify-content-evenly align-content-center gap-3 flex-wrap p-3">
-            <MudChipSet @bind-SelectedChips="selected"  MultiSelection="true" Filter="true">
+            <MudChipSet @bind-SelectedChips="selected"  MultiSelection="true" Filter="true"v SelectedValuesChanged="SelectedChanged">
                 @foreach (People people in peoples.Where(i => i.Gender!.Equals("형제")))
                 {
                     <MudChip Color="Color.Default" SelectedColor="Color.Success" Text="@people.Name"></MudChip>
@@ -21,7 +21,8 @@
                 }
             </MudChipSet>
         </div>
-        
+
+        <MudTextField Class="m-3" @bind-Value="TextValue" Label="현재 선택 인원 수" Variant="Variant.Filled" ReadOnly></MudTextField>
         <MudButton Class="mt-3" Variant="Variant.Outlined" Color="Color.Success" FullWidth="true" OnClick="Selected">완료</MudButton>
 
     </MudPaper>
@@ -32,6 +33,7 @@
     private List<People> peoples = new List<People>();
     MudChip[]? selected;
     private int MaxMatchedCount = 2;
+    private int TextValue = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,5 +61,10 @@
 
         _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, MaxMatchedCount);
         _navManager.NavigateTo("/");
+    }
+
+    private void SelectedChanged()
+    {
+        if (selected is not null) TextValue = selected.Count();
     }
 }
