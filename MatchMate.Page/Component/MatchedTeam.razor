@@ -9,6 +9,9 @@
     public List<People>? Matched { get; set; }
 
     [Parameter]
+    public Place? NowPlace { get; set; }
+
+    [Parameter]
     public string? buttonColor { get; set; }
 
     private string? _text { get; set; }
@@ -29,7 +32,7 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters { ["Matched"] = Matched };
+        var parameters = new DialogParameters { ["Matched"] = Matched, ["NowPlace"] = NowPlace };
         var dialog = await DialogService.ShowAsync<MatchedDialog>("팀 수정하기", parameters, options);
 
         var result = await dialog.Result;

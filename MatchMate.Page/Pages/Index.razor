@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject MatchService _Service
+@inject NavigationManager _navManager
 @inject IMessageService _MessageSerivce
 @inject IDialogService DialogService
 
@@ -49,6 +50,10 @@ else
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var dialog = await DialogService.ShowAsync<AddPlaceDialog>("구역 추가하기", options);
         var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            _navManager.NavigateTo("/matchpeople/add");
+        }
     }
 
     private void Rerender()

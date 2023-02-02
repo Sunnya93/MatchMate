@@ -38,7 +38,6 @@
             foreach (Place match in places!.Where(i => selected.Any(s => s.Text == i.Name)).ToList())
             {
                 _Service.Places!.Add(match);
-                _Service.Matcheds!.Add(new Matched { Place = match, MatchedPerson = new List<List<People>>() });
             }
         } 
 

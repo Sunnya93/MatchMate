@@ -1,4 +1,4 @@
-﻿@page "/matchpeople"
+﻿@page "/matchpeople/{Id}"
 @inject MatchService _Service
 @inject NavigationManager _navManager
 @inject IDialogService DialogService
@@ -30,6 +30,10 @@
 
 
 @code {
+
+    [Parameter]
+    public string Id { get; set; }
+
     private List<People> peoples = new List<People>();
     MudChip[]? selected;
     private int MaxMatchedCount = 2;
@@ -38,7 +42,21 @@
     protected override async Task OnInitializedAsync()
     {
         var json = await FileService.ReadFile("wwwroot/data/Peoples.json");
-        peoples = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();
+        peoples = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();        
+
+        //이미 배정되어 있는 사람은 삭제함
+        if (!Id.Equals("new"))
+        {
+            List<People> Matcheds = _Service.GetMatcheds();
+            for (int i = 0; i < peoples.Count; i++)
+            {
+                var person = peoples[i];
+                if (Matcheds.Contains(person))
+                {
+                    peoples.Remove(person); 
+                }
+            }
+        }
     }
 
     private async Task Selected()
@@ -52,14 +70,22 @@
 
         List<People> selectedPeople = peoples.Where(i => selected!.Any(s => s.Text == i.Name)).ToList();
 
-        if(selectedPeople.Count > 40)
+        if (selectedPeople.Count > 40)
         {
             var parameters = new DialogParameters { ["Content"] = $"현재 선택하신 봉사자는 {selectedPeople.Count}명 입니다.\r\n{selectedPeople.Count - 40}명 선택을 취소하세요." };
             DialogService.Show<ConfirmDialog>("40명 초과", parameters);
             return;
         }
 
-        _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, MaxMatchedCount);
+        if (Id.Equals("new"))
+        {
+            _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, MaxMatchedCount);
+        }
+        else
+        {
+            _Service.Matcheds = await _Service.AddMatchAsync(selectedPeople, MaxMatchedCount, _Service.Matcheds!);
+        }
+
         _navManager.NavigateTo("/");
     }
 

@@ -40,9 +40,9 @@ namespace MatchMate.Page.Logics
             return matches;
         }
 
-        public List<Matched> MakeMatches(List<People> selectedPeople, List<Place> places, int maxMatchedPeople)
+        public List<Matched> MakeMatches(List<People> selectedPeople, List<Place> places, int maxMatchedPeople, List<Matched> Matcheds)
         {
-            List<Matched> matcheds = new List<Matched>();
+            List<Matched> matcheds = Matcheds;
 
             // Create a new Random object outside of the loops to improve performance
             var random = new Random();
@@ -70,6 +70,7 @@ namespace MatchMate.Page.Logics
                             int index = random.Next(malePeople.Count);
                             if (!matchedPeople.Contains(malePeople[index]))
                             {
+                                malePeople[index].MatchedPlace = place;
                                 matchedPeople.Add(malePeople[index]);
                                 group.Add(malePeople[index]);
                                 selectedPeople.Remove(malePeople[index]);
@@ -92,6 +93,7 @@ namespace MatchMate.Page.Logics
                             int index = random.Next(femalePeople.Count);
                             if (!matchedPeople.Contains(femalePeople[index]))
                             {
+                                femalePeople[index].MatchedPlace = place;
                                 matchedPeople.Add(femalePeople[index]);
                                 group.Add(femalePeople[index]);
                                 selectedPeople.Remove(femalePeople[index]);

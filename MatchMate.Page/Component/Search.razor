@@ -2,13 +2,12 @@
     <MudTextField @bind-Value="@searchValue" Label="@Title" 
                   Variant="Variant.Outlined" Adornment="Adornment.End" 
                   AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" 
-                  TextChanged="@((e) => OnInput(e))" />
-
+                  OnDebounceIntervalElapsed="@((txt) => OnInput(txt))" DebounceInterval="100"/>
     <MudList>
         @{
             foreach (var person in Finds)
             {
-                <MudListItem Text="@person.Name" Icon="@Icons.Material.Filled.Person" OnClick="@(() => ClickedList(person.Name!))"/>
+                <MudListItem Text="@($"{person.Name}  {person.MatchedPlace.Name}")" Icon="@Icons.Material.Filled.Person" Style="@($"background-color:{person.MatchedPlace.Color};")" OnClick="@(() => ClickedList(person.Name!))"/>
             }
         }
     </MudList>
