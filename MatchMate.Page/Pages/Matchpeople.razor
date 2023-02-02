@@ -22,8 +22,8 @@
             </MudChipSet>
         </div>
 
-        <MudTextField Class="m-3" @bind-Value="TextValue" Label="현재 선택 인원 수" Variant="Variant.Filled" ReadOnly></MudTextField>
-        <MudButton Class="mt-3" Variant="Variant.Outlined" Color="Color.Success" FullWidth="true" OnClick="Selected">완료</MudButton>
+        <div class="mud-theme-secondary px-3 py-3 mud-elevation-16 rounded-xl fixed" style="top:20px;right:20px;">현재 선택한 봉사자 수: @SelectedCount</div>
+        <MudButton Class="mt-3" Variant="Variant.Filled" Color="Color.Success" FullWidth="true" OnClick="Selected">완료</MudButton>
 
     </MudPaper>
 </div>
@@ -33,7 +33,7 @@
     private List<People> peoples = new List<People>();
     MudChip[]? selected;
     private int MaxMatchedCount = 2;
-    private int TextValue = 0;
+    private int SelectedCount = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -65,6 +65,6 @@
 
     private void SelectedChanged()
     {
-        if (selected is not null) TextValue = selected.Count();
+        if (selected is not null) SelectedCount = selected.Count();
     }
 }
