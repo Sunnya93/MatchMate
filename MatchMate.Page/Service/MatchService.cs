@@ -80,7 +80,7 @@ namespace MatchMate.Page.Service
                     people.AddRange(peoples);
                 }
 
-                Text.Append("\r\n");
+                Text.Append("\r\n\r\n");
             }
 
             return new Tuple<string, List<People>>(Text.ToString(), people);
