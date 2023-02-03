@@ -40,12 +40,12 @@
     protected override async Task OnInitializedAsync()
     {
         var json = await FileService.ReadFile("wwwroot/data/Peoples.json");
-        List<People> NoMatcheds = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();
+        List<People> NoMatcheds = _Service.GetPeople(json).OrderBy(i => i.Name).ToList();
         if(_Service.Matcheds is not null)
         {
             List<People> Matcheds = _Service.GetMatcheds();
 
-            //이미 매칭 완료된 사람들의 배정된 구역 정보를 가져온다.
+            //조회되는 정보 중 이미 매칭 완료된 사람들의 경우 해당 정보로 대체
             for (int i = 0; i < NoMatcheds.Count; i++)
             {
                 var person = NoMatcheds[i];

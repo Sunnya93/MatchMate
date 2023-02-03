@@ -32,7 +32,7 @@
 @code {
 
     [Parameter]
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     private List<People> peoples = new List<People>();
     MudChip[]? selected;
@@ -42,10 +42,10 @@
     protected override async Task OnInitializedAsync()
     {
         var json = await FileService.ReadFile("wwwroot/data/Peoples.json");
-        peoples = _Service.GetPeopleAsync(json).OrderBy(i => i.Name).ToList();        
+        peoples = _Service.GetPeople(json).OrderBy(i => i.Name).ToList();        
 
         //이미 배정되어 있는 사람은 삭제함
-        if (!Id.Equals("new"))
+        if (!Id!.Equals("new"))
         {
             List<People> Matcheds = _Service.GetMatcheds();
             for (int i = 0; i < peoples.Count; i++)
@@ -77,7 +77,7 @@
             return;
         }
 
-        if (Id.Equals("new"))
+        if (Id!.Equals("new"))
         {
             _Service.Matcheds = await _Service.GetMatchAsync(selectedPeople, MaxMatchedCount);
         }

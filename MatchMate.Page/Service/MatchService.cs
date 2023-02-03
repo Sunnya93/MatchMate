@@ -44,7 +44,7 @@ namespace MatchMate.Page.Service
         }
 
 
-        public List<People> GetPeopleAsync(string json)
+        public List<People> GetPeople(string json)
         {
             return JsonSerializer.Deserialize<List<People>>(json)!;
         }
