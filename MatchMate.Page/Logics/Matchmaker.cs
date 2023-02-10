@@ -2,7 +2,7 @@
 
 namespace MatchMate.Page.Logics
 {
-    class Matchmaker
+    public class Matchmaker
     {
         private readonly List<People> _people;
         private readonly Random _random = new Random();

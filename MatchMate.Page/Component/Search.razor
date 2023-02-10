@@ -1,4 +1,6 @@
-﻿<div class="d-flex flex-column">
+﻿@using System.Text.RegularExpressions
+
+<div class="d-flex flex-column">
     <MudTextField @bind-Value="@searchValue" Label="@Title" 
                   Variant="Variant.Outlined" Adornment="Adornment.End" 
                   AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" 
@@ -48,7 +50,6 @@
     private async Task OnInput(string Value)
     {
         await ValueChanged(Value);
-        if (!string.IsNullOrEmpty(searchValue)) Finds = Peoples?.Where(i => i.Name!.ToLower().Contains(searchValue.ToLower())).ToList()!;
+        if (Peoples is not null) Finds = new SearchBy().Consonent(Peoples, Value);
     }
-
 }
