@@ -62,29 +62,36 @@
 
     public async void Add()
     {
-        //이미 추가된 사람은 리스트에서 제외
+        //이미 추가된 사람은 추가된 matched 리스트에서 삭제
         foreach (var matched in _Service.Matcheds!)
         {
             matched.MatchedPerson!.ForEach(peopleList => peopleList.RemoveAll(person => person.Name == Name));
         }
-      
-        People people = Peoples!.Where(i => i.Name == Name).FirstOrDefault()!;
-        if(NowPlace is not null) people.MatchedPlace = NowPlace;
 
-        //만약 기존 리스트에 있지 않으면 신규 추가
-        if (people is not null) Matched!.Add(people);
-        else
+        People? people = Peoples!.Where(i => i.Name == Name).FirstOrDefault();
+
+        if(NowPlace is not null)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
-            var parameters = new DialogParameters { ["Name"] = Name };
-            var dialog = await DialogService.ShowAsync<AddPersonDialog>("신규 봉사자 추가", parameters, options);
-            var result = await dialog.Result;
-
-            if (!result.Canceled)
+            //json 파일에 없는 사람의 경우 신규 추가
+            if(people is null)
             {
-                people = (People)result.Data;
+                var options = new DialogOptions { CloseOnEscapeKey = true };
+                var parameters = new DialogParameters { ["people"] = new People() { Name = Name } };
+                var dialog = await DialogService.ShowAsync<AddPersonDialog>("신규 봉사자 추가", parameters, options);
+                var result = await dialog.Result;
+
+                if (!result.Canceled)
+                {
+                    people = (People)result.Data;
+                    people.MatchedPlace = NowPlace;
+                    Matched!.Add(people);
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                people.MatchedPlace = NowPlace;
                 Matched!.Add(people);
-                StateHasChanged();
             }
         }
     }
