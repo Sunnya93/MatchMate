@@ -63,8 +63,15 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.1" />
+    <PackageReference Include="MudBlazor" Version="6.1.7" />
+  </ItemGroup>
+
     <ItemGroup>
-      <ProjectReference Include="..\MatchMate.Page\MatchMate.Page.csproj" />
+      <Reference Include="MatchMate.Page">
+        <HintPath>..\dll\MatchMate.Page.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
