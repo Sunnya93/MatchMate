@@ -47,14 +47,9 @@
         //이미 배정되어 있는 사람은 삭제함
         if (!Id!.Equals("new"))
         {
-            List<People> Matcheds = _Service.GetMatcheds();
-            for (int i = 0; i < peoples.Count; i++)
+            foreach (People people in _Service.GetMatcheds())
             {
-                var person = peoples[i];
-                if (Matcheds.Contains(person))
-                {
-                    peoples.Remove(person); 
-                }
+                peoples.RemoveAll(i => i.Name == people.Name);
             }
         }
     }
