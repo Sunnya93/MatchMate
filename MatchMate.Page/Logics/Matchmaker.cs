@@ -58,13 +58,16 @@ namespace MatchMate.Page.Logics
 
                 while (matches.Count < place.MaxTeam)
                 {
-                    var group = new List<People>();
                     int j = 0;
+                    var group = new List<People>();
 
                     while (j < maxMatchedPeople && j < selectedPeople.Count)
                     {
                         int index = random.Next(selectedPeople.Count);
-                        if (!matchedPeople.Contains(selectedPeople[index]))
+                        var selectedPerson = selectedPeople[index];
+
+                        // Add condition to check if the person's gender is the same as the previous matched people
+                        if (!matchedPeople.Any() || selectedPerson.Gender == matchedPeople[0].Gender)
                         {
                             selectedPeople[index].MatchedPlace = place;
                             matchedPeople.Add(selectedPeople[index]);
@@ -74,7 +77,7 @@ namespace MatchMate.Page.Logics
                         }
                     }
                     matches.Add(group);
-
+                    matchedPeople = new List<People>();
                     #region 형제 배정 후 자매 배정 (2023-05-16 해당 로직 삭제)
                     //    var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
 
