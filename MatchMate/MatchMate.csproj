@@ -43,10 +43,10 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg"/>
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\splash.svg"/>
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
@@ -68,10 +68,8 @@
     <PackageReference Include="MudBlazor" Version="6.1.7" />
   </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="MatchMate.Page">
-        <HintPath>..\dll\MatchMate.Page.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MatchMate.Page\MatchMate.Page.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -58,6 +58,8 @@ namespace MatchMate.Page.Service
                 new Place{ Name = "가락115동", Color = "#1cdbef", MaxTeam = 0 },
                 new Place{ Name = "SKView", Color = "#8E44AD", MaxTeam = 0 },
                 new Place{ Name = "삼성빌딩", Color = "#0497f8", MaxTeam = 0 },
+                new Place{ Name = "쌈지공원", Color = "#dcdcdc", MaxTeam = 0},
+                new Place{ Name = "경남은행", Color = "#92dfff", MaxTeam = 0 },
                 new Place{ Name = "프라임병원", Color = "#f70505", MaxTeam = 0}
             };
 

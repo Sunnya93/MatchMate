@@ -54,56 +54,75 @@ namespace MatchMate.Page.Logics
 
                 var matches = new List<List<People>>();
                 var matchedPeople = new List<People>();
-                bool SetBrother = false;
+                //bool SetBrother = false;
 
                 while (matches.Count < place.MaxTeam)
                 {
                     var group = new List<People>();
                     int j = 0;
-                    var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
 
-                    //형제 짝 먼저 배정
-                    if ((malePeople.Count > 0 && !SetBrother) || selectedPeople.FindAll(person => person.Gender == "자매").Count == 0)
+                    while (j < maxMatchedPeople && j < selectedPeople.Count)
                     {
-                        while (j < maxMatchedPeople && j < malePeople.Count)
+                        int index = random.Next(selectedPeople.Count);
+                        if (!matchedPeople.Contains(selectedPeople[index]))
                         {
-                            int index = random.Next(malePeople.Count);
-                            if (!matchedPeople.Contains(malePeople[index]))
-                            {
-                                malePeople[index].MatchedPlace = place;
-                                matchedPeople.Add(malePeople[index]);
-                                group.Add(malePeople[index]);
-                                selectedPeople.Remove(malePeople[index]);
-                                j++;
-                            }
+                            selectedPeople[index].MatchedPlace = place;
+                            matchedPeople.Add(selectedPeople[index]);
+                            group.Add(selectedPeople[index]);
+                            selectedPeople.Remove(selectedPeople[index]);
+                            j++;
                         }
-                        matches.Add(group);
-                        SetBrother = true;
                     }
+                    matches.Add(group);
 
-                   //자매 짝 배정
-                    group = new List<People>();
-                    j = 0;
-                    var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
+                    #region 형제 배정 후 자매 배정 (2023-05-16 해당 로직 삭제)
+                    //    var malePeople = selectedPeople.FindAll(person => person.Gender == "형제");
 
-                    if (femalePeople.Count > 0)
-                    {
-                        while (j < maxMatchedPeople && j < femalePeople.Count)
-                        {
-                            int index = random.Next(femalePeople.Count);
-                            if (!matchedPeople.Contains(femalePeople[index]))
-                            {
-                                femalePeople[index].MatchedPlace = place;
-                                matchedPeople.Add(femalePeople[index]);
-                                group.Add(femalePeople[index]);
-                                selectedPeople.Remove(femalePeople[index]);
-                                j++;
-                            }
-                        }
-                        matches.Add(group);
-                    }
+                    //    //형제 짝 먼저 배정
+                    //    if ((malePeople.Count > 0 && !SetBrother) || selectedPeople.FindAll(person => person.Gender == "자매").Count == 0)
+                    //    {
+                    //        while (j < maxMatchedPeople && j < malePeople.Count)
+                    //        {
+                    //            int index = random.Next(malePeople.Count);
+                    //            if (!matchedPeople.Contains(malePeople[index]))
+                    //            {
+                    //                malePeople[index].MatchedPlace = place;
+                    //                matchedPeople.Add(malePeople[index]);
+                    //                group.Add(malePeople[index]);
+                    //                selectedPeople.Remove(malePeople[index]);
+                    //                j++;
+                    //            }
+                    //        }
+                    //        matches.Add(group);
+                    //        SetBrother = true;
+                    //    }
+
+                    //   //자매 짝 배정
+                    //    group = new List<People>();
+                    //    j = 0;
+                    //    var femalePeople = selectedPeople.FindAll(person => person.Gender == "자매");
+
+                    //    if (femalePeople.Count > 0)
+                    //    {
+                    //        while (j < maxMatchedPeople && j < femalePeople.Count)
+                    //        {
+                    //            int index = random.Next(femalePeople.Count);
+                    //            if (!matchedPeople.Contains(femalePeople[index]))
+                    //            {
+                    //                femalePeople[index].MatchedPlace = place;
+                    //                matchedPeople.Add(femalePeople[index]);
+                    //                group.Add(femalePeople[index]);
+                    //                selectedPeople.Remove(femalePeople[index]);
+                    //                j++;
+                    //            }
+                    //        }
+                    //        matches.Add(group);
+                    //    }
+                    //}
+
+                    #endregion
                 }
-
+             
                 matcheds.Add(new Matched
                 {
                     Place = place,

@@ -1,0 +1,5 @@
+    <ItemGroup>
+      <Reference Include="MatchMate.Page">
+        <HintPath>..\dll\MatchMate.Page.dll</HintPath>
+      </Reference>
+    </ItemGroup>

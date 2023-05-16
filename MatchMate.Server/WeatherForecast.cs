@@ -1,4 +1,4 @@
-namespace MatchMate.Server
+﻿namespace MatchMate.Server
 {
     public class WeatherForecast
     {
