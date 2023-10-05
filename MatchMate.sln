@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Server", "MatchMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Page", "MatchMate.Page\MatchMate.Page.csproj", "{8DC99740-5794-40F4-A44D-98EAD265DC24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchMate.Wasm", "MatchMateWA\MatchMate.Wasm.csproj", "{73F2DBF2-26C9-40C3-AED4-705693B0A2ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Wasm", "MatchMate.Wasm\MatchMate.Wasm.csproj", "{73F2DBF2-26C9-40C3-AED4-705693B0A2ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchMate.Wasm.Page", "MatchMate.Wasm.Page\MatchMate.Wasm.Page.csproj", "{CBF37396-2469-451B-B664-3649E73F6944}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,12 +42,16 @@ Global
 		{73F2DBF2-26C9-40C3-AED4-705693B0A2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F2DBF2-26C9-40C3-AED4-705693B0A2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F2DBF2-26C9-40C3-AED4-705693B0A2ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF37396-2469-451B-B664-3649E73F6944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF37396-2469-451B-B664-3649E73F6944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF37396-2469-451B-B664-3649E73F6944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF37396-2469-451B-B664-3649E73F6944}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {0CBC74A4-4AD6-48B6-BC53-3CF23FC84626}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal

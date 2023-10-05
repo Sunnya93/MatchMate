@@ -1,7 +1,4 @@
-﻿<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<Router AppAssembly="@typeof(App).Assembly"
+﻿<Router AppAssembly="@typeof(App).Assembly"
         AdditionalAssemblies="new[] { typeof(MainWasmLayout).Assembly}">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainWasmLayout)"/>

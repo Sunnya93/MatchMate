@@ -9,10 +9,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.1" PrivateAssets="all" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.1.39" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MatchMate.Page\MatchMate.Page.csproj" />
+    <ProjectReference Include="..\MatchMate.Wasm.Page\MatchMate.Wasm.Page.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\data\" />
   </ItemGroup>
 
 </Project>
