@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /MatchMate/wwwroot/data/Peoples.json
+/MatchMateWA/wwwroot/data/Peoples.json
